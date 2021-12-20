@@ -11,11 +11,12 @@ func CreateTables(){
 	db := dbconnection.DBsetup()
 	messages.PrintMessage("Continue ...!")
 	rescreate, errcreate := db.Query(""+
-		"CREATE TABLE IF NOT EXISTS categorie(id INT PRIMARY KEY, libelle VARCHAR(10));"+
-		"CREATE TABLE IF NOT EXISTS marque(id INT PRIMARY KEY, libelle VARCHAR(10));"+
-		"CREATE TABLE IF NOT EXISTS model(id SERIAL PRIMARY KEY, libelle VARCHAR(10), "+
+		"DROP TABLE IF EXISTS annonce, model, marque, categorie CASCADE"+ // Delete first The Tables to avoid duplicated values for the test
+		"CREATE TABLE categorie(id INT PRIMARY KEY, libelle VARCHAR(10));"+
+		"CREATE TABLE marque(id INT PRIMARY KEY, libelle VARCHAR(10));"+
+		"CREATE TABLE model(id SERIAL PRIMARY KEY, libelle VARCHAR(10), "+
 							"marque INT REFERENCES marque(id));"+
-		"CREATE TABLE IF NOT EXISTS annonce(id SERIAL PRIMARY KEY, titre VARCHAR(10), contenu VARCHAR(1000), "+
+		"CREATE TABLE annonce(id SERIAL PRIMARY KEY, titre VARCHAR(10), contenu VARCHAR(1000), "+
 							"categorie INT REFERENCES categorie(id), "+
 							"model INT REFERENCES model(id))")
 
