@@ -13,8 +13,11 @@ var Router = mux.NewRouter()
 func Route() {
 
 	// Route handles & endpoints
+    
+	// Créer une Annonce
+	Router.HandleFunc("/annonces/", handler.CreateAnnonce).Methods("POST")
 
-	// Get all Annonces
+	// Recupérer 10 Annonces
 	Router.HandleFunc("/annonces/", handler.GetAnnonces).Methods("GET")
 
 }
