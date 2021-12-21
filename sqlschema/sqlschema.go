@@ -8,6 +8,7 @@ import (
 
 func CreateTables(){
 	messages.PrintMessage("Started ...!")
+
 	db := dbconnection.DBsetup()
 	rescreate, errcreate := db.Query(""+
 		// Preparation des tables
