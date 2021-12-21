@@ -24,7 +24,7 @@ func TestReadAnnonceByID(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `{"id":1,"first_name":"Krish","last_name":"Bhanushali","email_address":"krishsb2405@gmail.com","phone_number":"0987654321"}`
+	expected := `{"type":"succès","data":[{"id":"1","titre":"Voiture 1","contenu":"En vente à bon prix 1","categorie":"1","model":"1"}],"message":"L'Annonce a été bien recupérée!"}`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -46,7 +46,7 @@ func TestGetAnnonces(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"type":"success","data":[{"id":"1","titre":"Voiture 1","contenu":"En vente à bon prix 1","categorie":"1","model":"1"},{"id":"2","titre":"Voiture 2","contenu":"En vente à bon prix 2","categorie":"2","model":"2"},{"id":"3","titre":"Voiture 3","contenu":"En vente à bon prix 3","categorie":"3","model":"3"}],"message":"La liste des Annonces"}]`
+	expected := `{"type":"success","data":[{"id":"1","titre":"Voiture 1","contenu":"En vente à bon prix 1","categorie":"1","model":"1"},{"id":"2","titre":"Voiture 2","contenu":"En vente à bon prix 2","categorie":"2","model":"2"},{"id":"3","titre":"Voiture 3","contenu":"En vente à bon prix 3","categorie":"3","model":"3"}],"message":"La liste des Annonces"}`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
