@@ -130,7 +130,7 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
                     erreur := db.QueryRow("INSERT INTO annonce(titre, contenu, categorie, marque) VALUES($1, $2, $3, $4) returning id;", annonceTitre, annonceContenu, categoryid, brandid).Scan(&lastInsertID)
                     messages.CheckError(erreur)
                     annonces = append(annonces, model.Annonce{Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
-                    response = model.JsonResponse{Type: "success", Data:annonces,  Message: "L' Annonce " +annonceCategorie+" a été bien insérée!"} 
+                    response = model.JsonResponse{Type: "succès", Data:annonces,  Message: "L' Annonce " +annonceCategorie+" a été bien insérée!"} 
                 } else {
 
                     response = model.JsonResponse{Type: "erreur", Message: "Le Model saisi n'existe pas! Merci de revoir."}
@@ -147,7 +147,7 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
                 erreur := db.QueryRow("INSERT INTO annonce(titre, contenu, categorie) VALUES($1, $2, $3) returning id;", annonceTitre, annonceContenu, categoryid).Scan(&lastInsertID)
                 messages.CheckError(erreur)
                 annonces = append(annonces, model.Annonce{Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
-                response = model.JsonResponse{Type: "success", Data: annonces, Message: "L' Annonce " +annonceCategorie+" a été bien insérée!"}
+                response = model.JsonResponse{Type: "succès", Data: annonces, Message: "L' Annonce " +annonceCategorie+" a été bien insérée!"}
             }
 
         } else {
@@ -163,6 +163,7 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
 
 
 // Modifier une petite Annonce
+
 // response and request handler
 func UpdateAnnonce(w http.ResponseWriter, r *http.Request) {
 
@@ -216,7 +217,7 @@ func UpdateAnnonce(w http.ResponseWriter, r *http.Request) {
                         // Modifier une annonce en associant la marque trouvée
                         db.QueryRow("UPDATE annonce SET titre= $1, contenu= $2, categorie= $3, marque= $4 WHERE id= $5", newTitre, newContenu, categoryid, brandid, annonceId).Scan(&lastInsertID)
                         annonces = append(annonces, model.Annonce{Titre: newTitre, Contenu: newContenu, Categorie: strconv.Itoa(categoryid), Model: strconv.Itoa(brandid)})
-                        response = model.JsonResponse{Type: "success", Data:annonces,  Message: "L' Annonce " +annonceCategorie+" a été bien modifiée!"}
+                        response = model.JsonResponse{Type: "succès", Data:annonces,  Message: "L' Annonce " +annonceCategorie+" a été bien modifiée!"}
                     } else {
 
                         response = model.JsonResponse{Type: "erreur", Message: "Le Model saisi n'existe pas! Merci de revoir."}
@@ -371,7 +372,7 @@ func GetAnnonces(w http.ResponseWriter, r *http.Request) {
         annonces = append(annonces, model.Annonce{Id: id, Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
     }
 
-    var response = model.JsonResponse{Type: "success", Data: annonces, Message: "La liste des Annonces"}
+    var response = model.JsonResponse{Type: "succès", Data: annonces, Message: "La liste des Annonces"}
 
     json.NewEncoder(w).Encode(response)
 }

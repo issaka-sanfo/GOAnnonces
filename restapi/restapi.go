@@ -10,9 +10,8 @@ import (
 // Init the mux router
 var Router = mux.NewRouter()
 
+// Route handles & endpoints
 func Route() {
-
-	// Route handles & endpoints
     
 	// Créer une Annonce
 	Router.HandleFunc("/annonces/", handler.CreateAnnonce).Methods("POST")
