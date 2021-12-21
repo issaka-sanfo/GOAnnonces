@@ -13,6 +13,7 @@ import (
     "golang.org/x/text/transform"
     "golang.org/x/text/unicode/norm"
     "unicode"
+    "github.com/gorilla/mux"
 )
 
 // Créer une petite Annonce
@@ -145,6 +146,40 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(response)
 }
 
+// Supprimer une Annonce
+// response and request handlers
+func DeleteAnnonce(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r) // Query variable
+
+    annonceId := params["annonceid"]
+
+    var response = model.JsonResponse{}
+
+    if annonceId == "" {
+        response = model.JsonResponse{Type: "erreur", Message: "Ajouter l'identifiant de l'Annonce dans le paramètre."}
+    } else {
+        db := dbconnection.DBsetup()
+
+        row, _ := db.Query("SELECT id, titre, contenu, categorie, marque FROM annonce WHERE id = $1", annonceId)
+        if row.Next() {
+            messages.PrintMessage("Deleting Annonce from DB")
+
+            _, err := db.Exec("DELETE FROM annonce WHERE id = $1", annonceId)
+
+            // check errors
+            messages.CheckError(err)
+
+            response = model.JsonResponse{Type: "succès", Message: "L'Annonce a été bien supprimé!"}
+        } else {
+            response = model.JsonResponse{Type: "Erreur", Message: "L'identifiant de l'Annonce n'existe pas, merci de revoir!"}
+        }
+        
+    }
+
+    json.NewEncoder(w).Encode(response)
+}
+
+
 // Recupérer 10 Annonces
 // response and request handler
 func GetAnnonces(w http.ResponseWriter, r *http.Request) {
@@ -163,7 +198,7 @@ func GetAnnonces(w http.ResponseWriter, r *http.Request) {
 
     // Pour chaque Annonce
     for rows.Next() {
-        var id int
+        var id string
         var annonceTitre string
         var annonceContenu string
 		var annonceCategorie string
@@ -174,7 +209,7 @@ func GetAnnonces(w http.ResponseWriter, r *http.Request) {
         // check errors
         messages.CheckError(err)
 
-        annonces = append(annonces, model.Annonce{Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
+        annonces = append(annonces, model.Annonce{Id: id, Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
     }
 
     var response = model.JsonResponse{Type: "success", Data: annonces, Message: "La liste des Annonces"}

@@ -3,6 +3,7 @@ package model
 // Data structures
 
 type Annonce struct {
+	Id string `json:"id"`
     Titre string `json:"titre"`
     Contenu string `json:"contenu"`
 	Categorie string `json:"categorie"`
