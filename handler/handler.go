@@ -17,6 +17,9 @@ import (
     "strconv"
 )
 
+
+
+
 //************************************ L' Algorithme de Matching ************************************//
 func MatchingAlgo(clientsaisie string) int {
     db := dbconnection.DBsetup()
@@ -78,6 +81,8 @@ func MatchingAlgo(clientsaisie string) int {
     }
     return id
 }
+
+
 
 // Créer une petite Annonce
 // response and request handler
@@ -245,6 +250,8 @@ func UpdateAnnonce(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(response)
 }
 
+
+
 // Recupérer une Annonce
 // response and request handler
 func ReadAnnonce(w http.ResponseWriter, r *http.Request) {
@@ -293,6 +300,9 @@ func ReadAnnonce(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(response)
 }
 
+
+
+
 // Supprimer une Annonce
 // response and request handlers
 func DeleteAnnonce(w http.ResponseWriter, r *http.Request) {
@@ -325,6 +335,8 @@ func DeleteAnnonce(w http.ResponseWriter, r *http.Request) {
 
     json.NewEncoder(w).Encode(response)
 }
+
+
 
 
 // Recupérer 10 Annonces
