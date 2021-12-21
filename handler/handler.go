@@ -146,6 +146,54 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(response)
 }
 
+// Recupérer une Annonce
+// response and request handler
+func ReadAnnonce(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r) // Query variable
+
+    annonceId := params["annonceid"]
+
+    var response = model.JsonResponse{}
+
+    // var response []JsonResponse
+    var annonces []model.Annonce
+
+    if annonceId == "" {
+        response = model.JsonResponse{Type: "erreur", Message: "Ajouter l'identifiant de l'Annonce dans le paramètre."}
+    } else {
+        db := dbconnection.DBsetup()
+
+        row, _ := db.Query("SELECT id, titre, contenu, categorie, marque FROM annonce WHERE id = $1", annonceId)
+        if row.Next() {
+
+            var id string
+            var annonceTitre string
+            var annonceContenu string
+            var annonceCategorie string
+            var annonceModel string
+
+            messages.PrintMessage("Reading Annonce from DB")
+
+            err := row.Scan(&id, &annonceTitre, &annonceContenu, &annonceCategorie, &annonceModel)
+
+            // check errors
+            messages.CheckError(err)
+    
+            annonces = append(annonces, model.Annonce{Id: id, Titre: annonceTitre, Contenu: annonceContenu, Categorie: annonceCategorie, Model: annonceModel})
+    
+            response = model.JsonResponse{Type: "succès", Data: annonces, Message: "L'Annonce a été bien recupérée!"}
+
+        } else {
+
+            response = model.JsonResponse{Type: "Erreur", Message: "L'identifiant de l'Annonce n'existe pas, merci de revoir!"}
+
+        }
+        
+    }
+
+    json.NewEncoder(w).Encode(response)
+}
+
 // Supprimer une Annonce
 // response and request handlers
 func DeleteAnnonce(w http.ResponseWriter, r *http.Request) {

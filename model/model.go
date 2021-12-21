@@ -1,6 +1,6 @@
 package model
 
-// Data structures
+// Les structures de données liées aux Entités Annonce, Categorie, Marque et Model
 
 type Annonce struct {
 	Id string `json:"id"`
@@ -23,6 +23,8 @@ type Model struct {
 	Marque string `json:"marque"`
 }
 
+
+// Structure de reponse JSON
 type JsonResponse struct {
     Type    string `json:"type"`
     Data    []Annonce `json:"data"`

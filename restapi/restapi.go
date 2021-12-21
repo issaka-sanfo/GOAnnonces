@@ -17,6 +17,9 @@ func Route() {
 	// Créer une Annonce
 	Router.HandleFunc("/annonces/", handler.CreateAnnonce).Methods("POST")
 
+	// Récupérer une Annonce
+	Router.HandleFunc("/annonces/{annonceid}", handler.ReadAnnonce).Methods("GET")
+
 	// Supprimer une Annonce
 	Router.HandleFunc("/annonces/{annonceid}", handler.DeleteAnnonce).Methods("DELETE")
 
