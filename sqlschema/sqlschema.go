@@ -12,7 +12,7 @@ func CreateTables(){
 	db := dbconnection.DBsetup()
 	rescreate, errcreate := db.Query(""+
 		// Preparation des tables
-		"DROP TABLE IF EXISTS annonce, model, marque, categorie CASCADE;"+ // Supprimer d'abord les Tables:  annonce, model, marque et categorie pour eviter de dupliquer les valeurs pour le test
+		"DROP TABLE IF EXISTS annonce, model, marque, categorie CASCADE;"+ // Supprimer d'abord les Tables:  annonce, model, marque et categorie pour en suite ajouter des données pour les test APIs
 		"CREATE TABLE categorie(id INT PRIMARY KEY, libelle VARCHAR(10));"+
 		"CREATE TABLE marque(id INT PRIMARY KEY, libelle VARCHAR(10));"+
 		"CREATE TABLE model(id SERIAL PRIMARY KEY, libelle VARCHAR(10), "+
