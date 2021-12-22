@@ -8,7 +8,6 @@ import (
 	"goanonnonces.leboncoin.fr/model"
 	"goanonnonces.leboncoin.fr/dbconnection"
 	"goanonnonces.leboncoin.fr/messages"
-    "github.com/asaskevich/govalidator"
     "golang.org/x/text/runes"
     "golang.org/x/text/transform"
     "golang.org/x/text/unicode/norm"
@@ -44,25 +43,19 @@ func MatchingAlgo(clientsaisie string) int {
         // Des variables Patterns pour le Model de vehicule
         temporaire := modellibelle // Récupérer le model prédéfini dans une variable temporaire
         temporaire = strings.ToLower(temporaire) // trasformer en minuscule
-        pattern1remove := strings.Replace(temporaire, " ", "", -1)
-        pattern2add := ""
-        for i := 0; i < len(temporaire); i++ { // Parcourir les caractères du model et si on croise un entier on le precède avec de l'espace
-            if govalidator.IsInt(string(temporaire[i])) { // Le caractère est un entier
-                pattern2add += " "+string(temporaire[i:len(temporaire)]) // Ajouter un espace et le reste des chiffres
-                break
-            } else {
-                pattern2add += string(temporaire[i]) // Le caractère n'est pas un entier
-            }
-        }
+        patternremove := strings.Replace(temporaire, " ", "", -1) // Supprimer les espaces
 
-        // Verifier si Le Model saisi par l'utilisateur contient "Le libelle du Model" ou un des "2 Pattens: pattern1remove et pattern2add"
+
+        /* Verifier si Le Model saisi par l'utilisateur contient "patternremove"*/
+
         modeltemp := clientsaisie// Récupérer le modèle saisi par l'utilisateur dans une variable temporaire
-        t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-        saisie, _, _ := transform.String(t, modeltemp)
+        t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC) //Formaatage Supprimer les accents
+        saisie, _, _ := transform.String(t, modeltemp) //Supprimer les accents
         saisie = strings.ToLower(saisie) // trasformer en minuscule
+        saisieremove := strings.Replace(saisie, " ", "", -1) // Supprimer les espaces
         /* D'après les examples donnés; le Client saisie plus caractères pour le modèle de Vehicule que le nombre de caractères du Modèle prédéfini
-        /* Alors, verifier si on trouvera le Modèle prédéfini avec tous ses patterns dans le Modèle saisi par l'utilisateur, si oui: On est dans le bon Modèle*/
-        if strings.Contains(saisie, temporaire) || strings.Contains(saisie, pattern1remove) || strings.Contains(saisie, pattern2add)  {
+        /* Alors, verifier si on trouvera le Modèle prédéfini avec le patternremove dans le Modèle saisi par l'utilisateur, si oui: On est dans le bon Modèle*/
+        if strings.Contains(saisieremove, patternremove) {
             // Trouver la marque contenant le model
             brand, error := db.Query("SELECT id, libelle FROM marque WHERE id=$1 LIMIT 1", modelmarque)
             messages.CheckError(error)
@@ -72,8 +65,6 @@ func MatchingAlgo(clientsaisie string) int {
                 var libelle string
                 err := brand.Scan(&id, &libelle)
                 messages.CheckError(err)
-
-                return id
                 
             }
              
@@ -167,7 +158,9 @@ func CreateAnnonce(w http.ResponseWriter, r *http.Request) {
 // response and request handler
 func UpdateAnnonce(w http.ResponseWriter, r *http.Request) {
 
-    annonceId := r.FormValue("id")
+    params := mux.Vars(r) // Query variable
+
+    annonceId := params["annonceid"]
     newTitre := r.FormValue("titre")
     newContenu := r.FormValue("contenu")
     newcategorie := r.FormValue("categorie")

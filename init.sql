@@ -1,0 +1,3 @@
+CREATE USER postgres;
+CREATE DATABASE annonces;
+GRANT ALL PRIVILEGES ON DATABASE annonces TO postgres;

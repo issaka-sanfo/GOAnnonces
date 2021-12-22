@@ -17,7 +17,7 @@ func Route() {
 	Router.HandleFunc("/annonces/", handler.CreateAnnonce).Methods("POST")
 
 	// Modifier une Annonce
-	Router.HandleFunc("/annonces/", handler.UpdateAnnonce).Methods("PUT")
+	Router.HandleFunc("/annonces/{annonceid}", handler.UpdateAnnonce).Methods("PUT")
 
 	// Récupérer une Annonce
 	Router.HandleFunc("/annonces/{annonceid}", handler.ReadAnnonce).Methods("GET")
