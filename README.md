@@ -7,8 +7,6 @@ $ docker-compose up
 
 
 
-
-
 2- Requêtes curl , https://curl.se/:
 *********************************************************************************************************
 
@@ -40,6 +38,6 @@ Supprimer une Annonce, DELETE:
 $ curl -X DELETE http://localhost:10000/annonces/1
 
 
-Je suis ouvert aux commentaires et je suis prêt à améliorer mon travail de jour en jour! Merci:)
+Je suis ouvert aux commentaires et prêt à améliorer mon travail de jour en jour! Merci:)
 
 
