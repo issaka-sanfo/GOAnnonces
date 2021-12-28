@@ -40,6 +40,15 @@ Supprimer une Annonce, DELETE:
 $ curl -X DELETE http://localhost:10000/annonces/1
 
 
+
+
+Unit Tests:
+
+Les tests unitaires se trouvent dans le sous dossier "testapis"
+
+
+
+
 Je suis ouvert aux commentaires et prêt à améliorer mon travail de jour en jour! Merci:)
 
 
