@@ -54,10 +54,13 @@ Les tests unitaires se trouvent dans le sous dossier "testapis"
 *********************************************************************************************************
 
 EC2 - AMI Instance with Ubuntu DISTRIB_DESCRIPTION="Ubuntu 20.04.3 LTS"
+
 J'ai installé Docker sur cette Instance avec les instruction indiquées sur:
 https://docs.docker.com/engine/install/ubuntu/
+
 En suite, j'ai installé docker-compose avec la commande: 
 $ sudo apt  install docker-compose
+
 Le container est lancé au port 10000 de l'Instance, on peut faire les Tests APIs avec le DNS suivant:
 ec2-3-143-220-107.us-east-2.compute.amazonaws.com:10000/annonces/
 
