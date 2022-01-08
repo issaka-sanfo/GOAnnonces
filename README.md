@@ -70,6 +70,6 @@ ec2-3-143-220-107.us-east-2.compute.amazonaws.com:10000/annonces/
 
 
 
-Je suis ouvert aux commentaires et prêt à améliorer mon travail de jour en jour! Merci:)
+
 
 
