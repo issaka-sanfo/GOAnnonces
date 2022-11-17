@@ -32,7 +32,7 @@ curl -X PUT http://localhost:10000/annonces/4 -d '{"titre":"Camionette",contenu"
 
 
 
-Récupere Une Annonce, GET:
+Récuperer une Annonce, GET:
 
 $ curl http://localhost:10000/annonces/1
 
