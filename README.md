@@ -54,9 +54,7 @@ Les tests unitaires se trouvent dans le sous dossier "testapis"
 *********************************************************************************************************
 
 EC2 - AMI Instance with Ubuntu DISTRIB_DESCRIPTION="Ubuntu 20.04.3 LTS"
-
-J'ai installé Docker sur cette Instance avec les instruction indiquées sur:
-https://docs.docker.com/engine/install/ubuntu/
+Doc: https://docs.docker.com/engine/install/ubuntu/
 
 En suite, j'ai installé docker-compose avec la commande: 
 
